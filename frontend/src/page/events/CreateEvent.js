@@ -41,7 +41,7 @@ export default function CreateEvent() {
         }
 
         try {
-            const createevent = await axios.post('http://localhost:4000/api/create', value);
+            const createevent = await axios.post('https://web-lichsukien.onrender.com/api/create', value);
             const response = createevent.data;
             if (response.success) {
                 alert(response.Message);

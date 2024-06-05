@@ -24,7 +24,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
         if (!eventId) return;
         async function fetchEvent() {
             try {
-                const response = await axios.get(`http://localhost:4000/api/get/${eventId}`); // Lấy dữ liệu của sự kiện với ID tương ứng
+                const response = await axios.get(`https://web-lichsukien.onrender.com/api/get/${eventId}`); // Lấy dữ liệu của sự kiện với ID tương ứng
                 const event = response.data.event;
 
                 // Chuyển đổi thời gian diễn ra sự kiện thành đối tượng Date
@@ -73,7 +73,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
         }
 
         try {
-            const response = await axios.put(`http://localhost:4000/api/update/${eventId}`, value);
+            const response = await axios.put(`https://web-lichsukien.onrender.com/api/update/${eventId}`, value);
             if (response.data.success) {
                 alert(response.data.message);
                 navigate('/'); // Chuyển hướng về trang danh sách sự kiện

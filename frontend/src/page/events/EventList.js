@@ -13,7 +13,7 @@ export default function EventList() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const fetchEvent = await axios.get('http://localhost:4000/api/get');
+            const fetchEvent = await axios.get('https://web-lichsukien.onrender.com/api/get');
             const response = fetchEvent.data;
             console.log(response);
             setData(response);
@@ -31,7 +31,7 @@ export default function EventList() {
     const handleDelete = async (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa sự kiện này?')) {
             try {
-                const response = await axios.delete(`http://localhost:4000/api/delete/${id}`);
+                const response = await axios.delete(`https://web-lichsukien.onrender.com/api/delete/${id}`);
                 if (response.data.success) {
                     alert(response.data.message);
                     fetchData(); // Tải lại danh sách sự kiện sau khi xóa thành công
