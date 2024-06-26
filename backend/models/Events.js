@@ -4,8 +4,11 @@ const eventsSchema = new mongoose.Schema({
     ten_su_kien: {
         type: String
     },
-    thoi_gian_dien_ra_su_kien: {
+    ngay_dien_ra_su_kien: {
         type: Date
+    },
+    thoi_gian_dien_ra_su_kien: {
+        type: String
     },
     dia_diem: {
         dia_chi: {

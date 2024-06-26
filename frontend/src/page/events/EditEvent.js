@@ -9,6 +9,7 @@ import './style.css'
 export default function EditEvent({ showModal, handleClose, eventId }) {
     const [value, setValue] = useState({
         ten_su_kien: "",
+        ngay_dien_ra_su_kien: "",
         thoi_gian_dien_ra_su_kien: "",
         dia_diem: {
             dia_chi: "",
@@ -53,17 +54,18 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                 console.log(event);
 
                 // Chuyển đổi thời gian diễn ra sự kiện thành đối tượng Date
-                const eventDate = parse(event.thoi_gian_dien_ra_su_kien, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", new Date());
+                const eventDate = parse(event.ngay_dien_ra_su_kien, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", new Date());
                 if (isValid(eventDate)) {
                     console.log(eventDate);
                     setSelectedDate(eventDate);
                 } else {
-                    console.error('Invalid event date:', event.thoi_gian_dien_ra_su_kien);
+                    console.error('Invalid event date:', event.ngay_dien_ra_su_kien);
                 }
 
                 setValue({
                     ten_su_kien: event.ten_su_kien,
-                    thoi_gian_dien_ra_su_kien: isValid(eventDate) ? format(eventDate, 'dd/MM/yyyy') : "",
+                    ngay_dien_ra_su_kien: isValid(eventDate) ? format(eventDate, 'dd/MM/yyyy') : "",
+                    thoi_gian_dien_ra_su_kien: event.thoi_gian_dien_ra_su_kien || "",
                     dia_diem: {
                         dia_chi: event?.dia_diem?.dia_chi || "",
                         link_ban_do: event?.dia_diem?.link_ban_do || ""
@@ -155,7 +157,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                 loai_gia_ve: ticketType,
                 so_tien: ticketType === 'Có phí' ? value.gia_ve.so_tien || 0 : 0
             },
-            thoi_gian_dien_ra_su_kien: formattedDate
+            ngay_dien_ra_su_kien: formattedDate
         };
 
         try {
@@ -230,7 +232,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                                 </div>
 
                                 <div className='row mb-3'>
-                                    <label className='col-sm-4 col-form-label'>Thời gian diễn ra sự kiện<label style={{ color: 'red' }}>*</label></label>
+                                    <label className='col-sm-4 col-form-label'>Ngày diễn ra sự kiện<label style={{ color: 'red' }}>*</label></label>
                                     <div className='col-sm-8'>
                                         <DatePicker
                                             selected={selectedDate}
@@ -239,6 +241,13 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                                             placeholderText="dd/MM/yyyy"
                                             className='form-control'
                                         />
+                                    </div>
+                                </div>
+
+                                <div className='row mb-3'>
+                                    <label className='col-sm-4 col-form-label'>Thời gian:</label>
+                                    <div className='col-sm-3'>
+                                        <input className='form-control' name='thoi_gian_dien_ra_su_kien' placeholder="HH:mm - HH:mm" onChange={handleChange} value={value.thoi_gian_dien_ra_su_kien} />
                                     </div>
                                 </div>
 

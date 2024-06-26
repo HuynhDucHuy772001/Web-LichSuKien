@@ -5,6 +5,7 @@ const CreateEvent = async (req, res) => {
         // Kiểm tra và gán giá trị từ req.body
         const {
             ten_su_kien,
+            ngay_dien_ra_su_kien,
             thoi_gian_dien_ra_su_kien,
             dia_diem,
             gia_ve,
@@ -27,13 +28,14 @@ const CreateEvent = async (req, res) => {
         const website = don_vi_to_chuc?.thong_tin_lien_he?.website;
 
         // Kiểm tra điều kiện cần thiết cho các trường bắt buộc
-        if (!ten_su_kien || !thoi_gian_dien_ra_su_kien || !dia_chi || !link_ban_do || !loai_gia_ve || (loai_gia_ve === 'Số tiền' && !so_tien) || !hinh_anh || !clip_gioi_thieu || !linh_vuc || !nguon) {
+        if (!ten_su_kien || !ngay_dien_ra_su_kien || !dia_chi || !link_ban_do || !loai_gia_ve || (loai_gia_ve === 'Số tiền' && !so_tien) || !hinh_anh || !clip_gioi_thieu || !linh_vuc || !nguon) {
             return res.status(400).json({ success: false, message: 'Thiếu thông tin cần thiết.' });
         }
 
         // Tạo sự kiện mới
         const NewEvent = new EventsModels({
             ten_su_kien,
+            ngay_dien_ra_su_kien,
             thoi_gian_dien_ra_su_kien,
             dia_diem: { dia_chi, link_ban_do },
             gia_ve: { loai_gia_ve, so_tien },

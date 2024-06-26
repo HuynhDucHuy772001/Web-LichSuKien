@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 export default function CreateEvent() {
     const [value, setValue] = useState({
         ten_su_kien: "",
+        ngay_dien_ra_su_kien: "",
         thoi_gian_dien_ra_su_kien: "",
         dia_diem: {
             dia_chi: "",
@@ -100,7 +101,7 @@ export default function CreateEvent() {
 
         const updatedValue = {
             ...value,
-            thoi_gian_dien_ra_su_kien: timestamp
+            ngay_dien_ra_su_kien: timestamp
         };
 
         try {
@@ -161,7 +162,7 @@ export default function CreateEvent() {
                         </div>
 
                         <div className='row mb-3'>
-                            <label className='col-sm-4 col-form-label'>Thời gian diễn ra sự kiện<label style={{ color: 'red' }}>*</label></label>
+                            <label className='col-sm-4 col-form-label'>Ngày diễn ra sự kiện<label style={{ color: 'red' }}>*</label></label>
                             <div className='col-sm-8'>
                                 <DatePicker
                                     selected={selectedDate}
@@ -170,6 +171,13 @@ export default function CreateEvent() {
                                     placeholderText="dd/MM/yyyy"
                                     className='form-control'
                                 />
+                            </div>
+                        </div>
+
+                        <div className='row mb-3'>
+                            <label className='col-sm-4 col-form-label'>Thời gian:</label>
+                            <div className='col-sm-3'>
+                                <input className='form-control' name='thoi_gian_dien_ra_su_kien' placeholder="HH:mm - HH:mm" onChange={handleChange} value={value.thoi_gian_dien_ra_su_kien} />
                             </div>
                         </div>
 

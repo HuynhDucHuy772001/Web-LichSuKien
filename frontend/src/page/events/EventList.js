@@ -92,7 +92,7 @@ export default function EventList() {
                             <th className='text-center align-middle'>Hình ảnh</th>
                             <th className='text-center align-middle'>Tiêu đề sự kiện</th>
                             <th className='text-center align-middle'>Lĩnh vực</th>
-                            <th className='text-center align-middle'>Thời gian diễn ra sự kiện</th>
+                            <th className='text-center align-middle'>Ngày diễn ra sự kiện</th>
                             <th className='text-center align-middle'>Địa điểm tổ chức sự kiện</th>
                             <th className='text-center align-middle'>Bài viết</th>
                             <th className='text-center align-middle'>Thao tác</th>
@@ -108,7 +108,7 @@ export default function EventList() {
                                     <td className='text-center align-middle' style={{ width: '10%' }}>{item.ten_su_kien}</td>
                                     <td className='text-center align-middle'>{item.linh_vuc}</td>
                                     <td className='text-center align-middle'>
-                                        {format(new Date(item.thoi_gian_dien_ra_su_kien), 'dd/MM/yyyy')}
+                                        {format(new Date(item.ngay_dien_ra_su_kien), 'dd/MM/yyyy')}
                                     </td>
                                     <td className='text-center align-middle' style={{ width: '15%' }}>{item.dia_diem.dia_chi}</td>
                                     <td className='text-left line-clamp-scroll'>{item.bai_viet}</td>
