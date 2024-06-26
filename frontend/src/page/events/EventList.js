@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import * as XLSX from 'xlsx';
 import EditEvent from './EditEvent';
-import './style.css'
+import './style.css';
+import { format } from 'date-fns';
 
 export default function EventList() {
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [selectedEventId, setSelectedEventId] = useState(null);
@@ -13,7 +15,7 @@ export default function EventList() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const fetchEvent = await axios.get('https://web-lichsukien.onrender.com/api/get');
+            const fetchEvent = await axios.get('http://localhost:4000/api/get/');
             const response = fetchEvent.data;
             console.log(response);
             setData(response);
@@ -31,7 +33,7 @@ export default function EventList() {
     const handleDelete = async (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa sự kiện này?')) {
             try {
-                const response = await axios.delete(`https://web-lichsukien.onrender.com/api/delete/${id}`);
+                const response = await axios.delete(`http://localhost:4000/api/delete/${id}`);
                 if (response.data.success) {
                     alert(response.data.message);
                     fetchData(); // Tải lại danh sách sự kiện sau khi xóa thành công
@@ -56,16 +58,27 @@ export default function EventList() {
         fetchData(); // Refresh the list after closing the modal
     }
 
+    const handleExport = () => {
+        const worksheet = XLSX.utils.json_to_sheet(data.events);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Events');
+        XLSX.writeFile(workbook, 'events.xlsx');
+    };
+
     return (
         <div className='container my-4'>
             <h2 className='text-center mb-4'>Danh sách các sự kiện</h2>
 
             <div className='row mb-3'>
-                <div className='col'>
-                    <Link className='btn btn-primary me-1' to='/create' role='button'>Thêm sự kiện mới</Link>
-                    <button type='button' className='btn btn-outline-primary' onClick={fetchData} >Tải lại</button>
+                <div className='col d-flex justify-content-between'>
+                    <div>
+                        <Link className='btn btn-primary me-1' to='/create' role='button'>Thêm sự kiện mới</Link>
+                        <button type='button' className='btn btn-outline-primary me-1' onClick={fetchData} >Tải lại</button>
+                    </div>
+                    <button type='button' className='btn btn-success ms-auto' onClick={handleExport} >Tải xuống file Excel</button>
                 </div>
             </div>
+
             {loading ? ( // Hiển thị spinner khi đang tải dữ liệu
                 <div className='text-center'>
                     <div className="spinner-border" role="status">
@@ -78,10 +91,10 @@ export default function EventList() {
                         <tr>
                             <th className='text-center align-middle'>Hình ảnh</th>
                             <th className='text-center align-middle'>Tiêu đề sự kiện</th>
-                            <th className='text-center align-middle'>Loại sự kiện</th>
+                            <th className='text-center align-middle'>Lĩnh vực</th>
                             <th className='text-center align-middle'>Thời gian diễn ra sự kiện</th>
                             <th className='text-center align-middle'>Địa điểm tổ chức sự kiện</th>
-                            <th className='text-center align-middle'>Mô tả</th>
+                            <th className='text-center align-middle'>Bài viết</th>
                             <th className='text-center align-middle'>Thao tác</th>
                         </tr>
                     </thead>
@@ -90,13 +103,15 @@ export default function EventList() {
                             return (
                                 <tr key={index}>
                                     <td className='text-center align-middle'>
-                                        <img src={item.duong_dan_hinh_anh} alt="Event" style={{ width: '150px', height: '100px' }} />
+                                        <img src={item.hinh_anh} alt="Event" style={{ width: '150px', height: '100px' }} />
                                     </td>
-                                    <td className='text-center align-middle'>{item.ten_su_kien}</td>
-                                    <td className='text-center align-middle'>{item.loai_su_kien}</td>
-                                    <td className='text-center align-middle'>{item.thoi_gian_dien_ra_su_kien}</td>
-                                    <td className='text-center align-middle' style={{ width: '15%' }}>{item.dia_diem}</td>
-                                    <td className='text-left line-clamp-scroll'>{item.mo_ta}</td>
+                                    <td className='text-center align-middle' style={{ width: '10%' }}>{item.ten_su_kien}</td>
+                                    <td className='text-center align-middle'>{item.linh_vuc}</td>
+                                    <td className='text-center align-middle'>
+                                        {format(new Date(item.thoi_gian_dien_ra_su_kien), 'dd/MM/yyyy')}
+                                    </td>
+                                    <td className='text-center align-middle' style={{ width: '15%' }}>{item.dia_diem.dia_chi}</td>
+                                    <td className='text-left line-clamp-scroll'>{item.bai_viet}</td>
                                     <td style={{ width: "10px", whiteSpace: 'nowrap' }} className='align-center align-middle'>
                                         <button className='btn btn-primary btn-sm me-1' onClick={() => handleEdit(item._id)}>Chỉnh sửa</button>
                                         <button type='button' className='btn btn-danger btn-sm' onClick={() => handleDelete(item._id)}>Xóa</button>
@@ -104,8 +119,6 @@ export default function EventList() {
                                 </tr>
                             )
                         })}
-
-
                     </tbody>
                 </table>
             )}
@@ -117,6 +130,5 @@ export default function EventList() {
                 />
             )}
         </div>
-    )
-
+    );
 }

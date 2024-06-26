@@ -2,18 +2,71 @@ import EventsModels from "../models/Events.js"
 
 const CreateEvent = async (req, res) => {
     try {
-        const { duong_dan_hinh_anh, ten_su_kien, thoi_gian_dien_ra_su_kien, dia_diem, loai_su_kien, mo_ta } = req.body
+        // Kiểm tra và gán giá trị từ req.body
+        const {
+            ten_su_kien,
+            thoi_gian_dien_ra_su_kien,
+            dia_diem,
+            gia_ve,
+            hinh_anh,
+            clip_gioi_thieu,
+            linh_vuc,
+            bai_viet,
+            nguon,
+            don_vi_to_chuc
+        } = req.body;
 
+        // Kiểm tra và gán các giá trị lồng nhau
+        const dia_chi = dia_diem?.dia_chi;
+        const link_ban_do = dia_diem?.link_ban_do;
+        const loai_gia_ve = gia_ve?.loai_gia_ve;
+        const so_tien = gia_ve?.so_tien;
+        const logo = don_vi_to_chuc?.logo;
+        const ten = don_vi_to_chuc?.ten;
+        const sdt = don_vi_to_chuc?.thong_tin_lien_he?.sdt;
+        const website = don_vi_to_chuc?.thong_tin_lien_he?.website;
+
+        // Kiểm tra điều kiện cần thiết cho các trường bắt buộc
+        if (!ten_su_kien || !thoi_gian_dien_ra_su_kien || !dia_chi || !link_ban_do || !loai_gia_ve || (loai_gia_ve === 'Số tiền' && !so_tien) || !hinh_anh || !clip_gioi_thieu || !linh_vuc || !nguon) {
+            return res.status(400).json({ success: false, message: 'Thiếu thông tin cần thiết.' });
+        }
+
+        // Tạo sự kiện mới
         const NewEvent = new EventsModels({
-            duong_dan_hinh_anh, ten_su_kien, thoi_gian_dien_ra_su_kien, dia_diem, loai_su_kien, mo_ta
-        })
-        await NewEvent.save()
-        res.status(200).json({ success: true, Message: 'Thêm mới sự kiện thành công', NewEvent })
+            ten_su_kien,
+            thoi_gian_dien_ra_su_kien,
+            dia_diem: { dia_chi, link_ban_do },
+            gia_ve: { loai_gia_ve, so_tien },
+            hinh_anh,
+            clip_gioi_thieu,
+            linh_vuc,
+            bai_viet,
+            nguon,
+            don_vi_to_chuc: { logo, ten, thong_tin_lien_he: { sdt, website } }
+        });
+
+        // Lưu sự kiện vào MongoDB
+        await NewEvent.save();
+
+        // Gửi phản hồi thành công
+        res.status(200).json({
+            success: true,
+            message: 'Thêm mới sự kiện thành công',
+            NewEvent
+        });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ success: false, Message: 'Internal Server Error', NewEvent })
+
+        // Gửi phản hồi lỗi
+        res.status(500).json({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message
+        });
     }
-}
+};
+
+export default CreateEvent;
 
 //read events
 const GetEvent = async (req, res) => {

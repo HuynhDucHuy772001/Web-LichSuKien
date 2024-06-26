@@ -8,6 +8,7 @@ const app = express()
 
 //mongoDB
 dbCon()
+//middlewares
 app.use(express.json())
 app.use(cors())
 app.use('/api', routers)
