@@ -49,7 +49,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
         if (!eventId) return;
         async function fetchEvent() {
             try {
-                const response = await axios.get(`http://localhost:4000/api/get/${eventId}`);
+                const response = await axios.get(`https://web-lichsukien.onrender.com/api/get/${eventId}`);
                 const event = response.data.event;
                 console.log(event);
 
@@ -161,7 +161,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
         };
 
         try {
-            const response = await axios.put(`http://localhost:4000/api/update/${eventId}`, updatedValue);
+            const response = await axios.put(`https://web-lichsukien.onrender.com/api/update/${eventId}`, updatedValue);
             if (response.data.success) {
                 alert(response.data.message);
                 navigate('/');
@@ -225,7 +225,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                                             <option value='Thể thao'>Thể thao</option>
                                             <option value='Văn hóa - Nghệ thuật'>Văn hóa - Nghệ thuật</option>
                                             <option value='Chính trị - Ngoại giao'>Chính trị - Ngoại giao</option>
-                                            <option value='Hội thảo chuyên môn'>Hội thảo chuyên môn</option>
+                                            <option value='Hội thảo chuyên ngành'>Hội thảo chuyên ngành</option>
                                             <option value='Khác'>Khác</option>
                                         </select>
                                     </div>

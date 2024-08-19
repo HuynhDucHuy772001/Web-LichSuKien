@@ -105,7 +105,7 @@ export default function CreateEvent() {
         };
 
         try {
-            const createevent = await axios.post('http://localhost:4000/api/create/', updatedValue);
+            const createevent = await axios.post('https://web-lichsukien.onrender.com/api/create/', updatedValue);
             const response = createevent.data;
             if (response.success) {
                 alert(response.message);
@@ -155,7 +155,7 @@ export default function CreateEvent() {
                                     <option value='Thể thao'>Thể thao</option>
                                     <option value='Văn hóa - Nghệ thuật'>Văn hóa - Nghệ thuật</option>
                                     <option value='Chính trị - Ngoại giao'>Chính trị - Ngoại giao</option>
-                                    <option value='Hội thảo chuyên môn'>Hội thảo chuyên môn</option>
+                                    <option value='Hội thảo chuyên ngành'>Hội thảo chuyên ngành</option>
                                     <option value='Khác'>Khác</option>
                                 </select>
                             </div>
