@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -8,10 +8,17 @@ export default function Login() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/home');
+        }
+    }, [navigate]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:4000/api/auth/login', { username, password });
+            const response = await axios.post('https://web-lichsukien.onrender.com/api/auth/login', { username, password });
             if (response.data.status === 'Success') {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('user', JSON.stringify(response.data.user));

@@ -44,9 +44,10 @@ const Login = async (req, res) => {
         const user = await UsersModels.findOne({ username });
         if (!user) return res.status(404).json({ success: false, message: 'Tài khoản không tồn tại!' })
 
-
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) if (!user) return res.status(401).json({ success: false, message: 'Tài khoản hoặc mật khẩu không chính xác!' })
+        if (!isPasswordValid) {
+            return res.status(401).json({ success: false, message: 'Tài khoản hoặc mật khẩu không chính xác!' });
+        }
 
         const token = jwt.sign({ _id: user._id }, 'secretkey123', {
             expiresIn: '90d',
@@ -64,7 +65,7 @@ const Login = async (req, res) => {
     } catch (error) {
         console.log(error);
 
-        res.status(300).json({
+        res.status(500).json({
             success: false,
             message: 'Internal Server Error',
             error: error.message

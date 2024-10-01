@@ -17,7 +17,7 @@ export default function EventList() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const fetchEvent = await axios.get('https://web-lichsukien.onrender.com/api/get/');
+            const fetchEvent = await axios.get('https://apisukien.1022.vn/api/get/');
             const response = fetchEvent.data;
             console.log(response);
             setData(response);
@@ -35,7 +35,7 @@ export default function EventList() {
     const handleDelete = async (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa sự kiện này?')) {
             try {
-                const response = await axios.delete(`https://web-lichsukien.onrender.com/api/delete/${id}`);
+                const response = await axios.delete(`https://apisukien.1022.vn/api/delete/${id}`);
                 if (response.data.success) {
                     alert(response.data.message);
                     fetchData(); // Tải lại danh sách sự kiện sau khi xóa thành công
@@ -84,7 +84,7 @@ export default function EventList() {
                         <button type='button' className='btn btn-outline-primary me-1' onClick={fetchData} >Tải lại</button>
                     </div>
                     <button type='button' className='btn btn-success ms-auto' onClick={handleExport} >Tải xuống file Excel</button>
-                    <button className='btn btn-secondary' onClick={handleLogout}>Đăng xuất</button>
+                    <button className='btn btn-secondary ms-1' onClick={handleLogout}>Đăng xuất</button>
                 </div>
             </div>
 
