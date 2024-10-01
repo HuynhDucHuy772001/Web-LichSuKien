@@ -1,11 +1,12 @@
 import express from 'express'
 import { CreateEvent, DeleteEvent, GetEvent, GetEventByID, UpdateEvent } from '../controller/EventController.js'
+import authMiddleware from '../middleware/auth.js'
 const routers = express.Router()
 
-routers.post('/create', CreateEvent)
-routers.get('/get/:id', GetEventByID)
-routers.get('/get', GetEvent)
-routers.put('/update/:id', UpdateEvent)
-routers.delete('/delete/:id', DeleteEvent)
+routers.post('/create', authMiddleware, CreateEvent)
+routers.get('/get/:id', authMiddleware, GetEventByID)
+routers.get('/get', authMiddleware, GetEvent)
+routers.put('/update/:id', authMiddleware, UpdateEvent)
+routers.delete('/delete/:id', authMiddleware, DeleteEvent)
 
 export default routers

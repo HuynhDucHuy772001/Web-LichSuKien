@@ -5,12 +5,14 @@ import * as XLSX from 'xlsx';
 import EditEvent from './EditEvent';
 import './style.css';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 export default function EventList() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [selectedEventId, setSelectedEventId] = useState(null);
+    const navigate = useNavigate();
 
     const fetchData = async () => {
         setLoading(true);
@@ -65,6 +67,12 @@ export default function EventList() {
         XLSX.writeFile(workbook, 'events.xlsx');
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        navigate('/login');
+    };
+
     return (
         <div className='container my-4'>
             <h2 className='text-center mb-4'>Danh sách các sự kiện</h2>
@@ -76,6 +84,7 @@ export default function EventList() {
                         <button type='button' className='btn btn-outline-primary me-1' onClick={fetchData} >Tải lại</button>
                     </div>
                     <button type='button' className='btn btn-success ms-auto' onClick={handleExport} >Tải xuống file Excel</button>
+                    <button className='btn btn-secondary' onClick={handleLogout}>Đăng xuất</button>
                 </div>
             </div>
 

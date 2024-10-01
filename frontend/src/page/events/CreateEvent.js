@@ -113,7 +113,7 @@ export default function CreateEvent() {
             }
         } catch (error) {
             console.log(error);
-            alert('Failed to create event.');
+            alert('Vui lòng nhập các trường cần thiết');
         }
     };
 
@@ -260,7 +260,7 @@ export default function CreateEvent() {
                                 <button type='submit' className='btn btn-primary'>Xác nhận</button>
                             </div>
                             <div className='col-sm-4 d-grid'>
-                                <Link className='btn btn-secondary' to='/' role='button'>Quay lại</Link>
+                                <Link className='btn btn-secondary' to='/home' role='button'>Quay lại</Link>
                             </div>
                         </div>
                     </form>
