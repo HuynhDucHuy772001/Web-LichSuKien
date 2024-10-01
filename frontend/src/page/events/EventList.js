@@ -6,6 +6,7 @@ import EditEvent from './EditEvent';
 import './style.css';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import { getAuthHeader } from '../../utils/auth';
 
 export default function EventList() {
     const [data, setData] = useState([]);
@@ -17,7 +18,9 @@ export default function EventList() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const fetchEvent = await axios.get('https://apisukien.1022.vn/api/get/');
+            const fetchEvent = await axios.get('https://apisukien.1022.vn/api/get/', {
+                headers: getAuthHeader()
+            });
             const response = fetchEvent.data;
             console.log(response);
             setData(response);
@@ -35,7 +38,9 @@ export default function EventList() {
     const handleDelete = async (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa sự kiện này?')) {
             try {
-                const response = await axios.delete(`https://apisukien.1022.vn/api/delete/${id}`);
+                const response = await axios.delete(`https://apisukien.1022.vn/api/delete/${id}`, {
+                    headers: getAuthHeader()
+                });
                 if (response.data.success) {
                     alert(response.data.message);
                     fetchData(); // Tải lại danh sách sự kiện sau khi xóa thành công

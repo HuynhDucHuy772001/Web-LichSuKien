@@ -5,11 +5,19 @@ import { useNavigate, Link } from 'react-router-dom';
 export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            setError('Mật khẩu không khớp. Vui lòng nhập lại.');
+            return;
+        }
+
         try {
             const response = await axios.post('https://web-lichsukien.onrender.com/api/auth/signup', { username, password });
             if (response.data.status === 'Success') {
@@ -49,6 +57,17 @@ export default function Register() {
                                         id='password'
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <label htmlFor='confirmPassword' className='form-label'>Nhập lại mật khẩu</label>
+                                    <input
+                                        type='password'
+                                        className='form-control'
+                                        id='confirmPassword'
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
                                         required
                                     />
                                 </div>

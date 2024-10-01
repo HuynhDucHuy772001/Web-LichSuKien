@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,11 +24,11 @@ export default function Login() {
             if (response.data.status === 'Success') {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
-                alert(response.data.message);
+                toast.success(response.data.message);
                 navigate('/home');
             }
         } catch (error) {
-            setError(error.response?.data?.message || 'Có lỗi xảy ra trong quá trình đăng nhập!');
+            toast.error(error.response?.data?.message || 'Có lỗi xảy ra trong quá trình đăng nhập!');
         }
     };
 
@@ -37,7 +39,7 @@ export default function Login() {
                     <div className='card'>
                         <div className='card-body'>
                             <h2 className='card-title text-center mb-4'>Đăng nhập</h2>
-                            {error && <div className='alert alert-danger'>{error}</div>}
+                            {/* {error && <div className='alert alert-danger'>{error}</div>} */}
                             <form onSubmit={handleSubmit}>
                                 <div className='mb-3'>
                                     <label htmlFor='username' className='form-label'>Tài khoản</label>
@@ -70,6 +72,19 @@ export default function Login() {
                     </div>
                 </div>
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
+
     );
 }

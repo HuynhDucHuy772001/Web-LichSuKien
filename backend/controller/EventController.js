@@ -1,4 +1,7 @@
 import EventsModels from "../models/Events.js"
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const CreateEvent = async (req, res) => {
     try {
@@ -30,6 +33,16 @@ const CreateEvent = async (req, res) => {
         // Kiểm tra điều kiện cần thiết cho các trường bắt buộc
         if (!ten_su_kien || !ngay_dien_ra_su_kien || !dia_chi || !link_ban_do || !loai_gia_ve || (loai_gia_ve === 'Số tiền' && !so_tien) || !hinh_anh || !clip_gioi_thieu || !linh_vuc || !nguon) {
             return res.status(400).json({ success: false, message: 'Thiếu thông tin cần thiết.' });
+        }
+
+        // Kiểm tra và xác thực token
+        const token = req.headers['authorization'].split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Không có token.' });
+        }
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        if (!decoded) {
+            return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
         }
 
         // Tạo sự kiện mới
@@ -73,6 +86,16 @@ export default CreateEvent;
 //read events
 const GetEvent = async (req, res) => {
     try {
+        // Kiểm tra và xác thực token
+        const token = req.headers['authorization'].split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Không có token.' });
+        }
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        if (!decoded) {
+            return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
+        }
+
         const events = await EventsModels.find()
         if (!events) {
             return res.status(404).json({ success: false, message: 'Không tìm thấy sự kiện' })
@@ -87,6 +110,16 @@ const GetEvent = async (req, res) => {
 //get event id
 const GetEventByID = async (req, res) => {
     try {
+        // Kiểm tra và xác thực token
+        const token = req.headers['authorization'].split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Không có token.' });
+        }
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        if (!decoded) {
+            return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
+        }
+
         const EventId = req.params.id;
         const event = await EventsModels.findById(EventId);
         if (!event) {
@@ -103,6 +136,16 @@ const GetEventByID = async (req, res) => {
 //update event
 const UpdateEvent = async (req, res) => {
     try {
+        // Kiểm tra và xác thực token
+        const token = req.headers['authorization'].split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Không có token.' });
+        }
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        if (!decoded) {
+            return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
+        }
+
         const EventId = req.params.id;
         const updateEvent = await EventsModels.findByIdAndUpdate(EventId, req.body, { new: true });
         if (!updateEvent) {
@@ -118,6 +161,16 @@ const UpdateEvent = async (req, res) => {
 //delete event
 const DeleteEvent = async (req, res) => {
     try {
+        // Kiểm tra và xác thực token
+        const token = req.headers['authorization'].split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Không có token.' });
+        }
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        if (!decoded) {
+            return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
+        }
+
         const EventId = req.params.id;
         const deleteEvent = await EventsModels.findByIdAndDelete(EventId)
         if (!deleteEvent) {
