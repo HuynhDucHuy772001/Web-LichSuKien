@@ -3,11 +3,17 @@ import mongoose from "mongoose";
 const usersSchema = new mongoose.Schema({
     username: {
         type: String,
-        require: true,
+        required: true,
     },
     password: {
         type: String,
-        require: true,
+        required: true,
+    },
+    token: {
+        type: String,
+    },
+    tokenExpiration: {
+        type: Date,
     },
 });
 

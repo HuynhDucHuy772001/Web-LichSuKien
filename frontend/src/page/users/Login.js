@@ -24,7 +24,12 @@ export default function Login() {
             if (response.data.status === 'Success') {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
-                toast.success(response.data.message);
+
+                // Set token expiration
+                const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 1 ngày từ giờ
+                localStorage.setItem('tokenExpiration', expirationTime);
+
+                alert(response.data.message);
                 navigate('/home');
             }
         } catch (error) {
@@ -74,7 +79,7 @@ export default function Login() {
             </div>
             <ToastContainer
                 position="top-center"
-                autoClose={1000}
+                autoClose={1500}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

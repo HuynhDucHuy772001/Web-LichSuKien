@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
@@ -14,6 +14,8 @@ export default function EventList() {
     const [showModal, setShowModal] = useState(false);
     const [selectedEventId, setSelectedEventId] = useState(null);
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
 
     const fetchData = async () => {
         setLoading(true);
@@ -34,6 +36,21 @@ export default function EventList() {
     useEffect(() => {
         fetchData();
     }, []);
+
+    const removeDiacritics = useCallback((str) => {
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }, []);
+
+    useEffect(() => {
+        if (data.events) {
+            const keywordWithoutDiacritics = removeDiacritics(searchTerm.toLowerCase());
+            const filtered = data.events.filter(event => {
+                const eventTitleWithoutDiacritics = removeDiacritics(event.ten_su_kien.toLowerCase());
+                return eventTitleWithoutDiacritics.includes(keywordWithoutDiacritics);
+            });
+            setFilteredData(filtered);
+        }
+    }, [searchTerm, data.events]);
 
     const handleDelete = async (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa sự kiện này?')) {
@@ -62,7 +79,7 @@ export default function EventList() {
     function handleCloseModal() {
         setShowModal(false);
         setSelectedEventId(null);
-        fetchData(); // Refresh the list after closing the modal
+        fetchData();
     }
 
     const handleExport = () => {
@@ -78,6 +95,10 @@ export default function EventList() {
         navigate('/login');
     };
 
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
     return (
         <div className='container my-4'>
             <h2 className='text-center mb-4'>Danh sách các sự kiện</h2>
@@ -88,6 +109,13 @@ export default function EventList() {
                         <Link className='btn btn-primary me-1' to='/create' role='button'>Thêm sự kiện mới</Link>
                         <button type='button' className='btn btn-outline-primary me-1' onClick={fetchData} >Tải lại</button>
                     </div>
+                    <input
+                        type="text"
+                        className="form-control w-25"
+                        placeholder="Tìm kiếm sự kiện..."
+                        value={searchTerm}
+                        onChange={handleSearch}
+                    />
                     <button type='button' className='btn btn-success ms-auto' onClick={handleExport} >Tải xuống file Excel</button>
                     <button className='btn btn-secondary ms-1' onClick={handleLogout}>Đăng xuất</button>
                 </div>
@@ -113,7 +141,7 @@ export default function EventList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.events?.map((item, index) => {
+                        {filteredData.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td className='text-center align-middle'>

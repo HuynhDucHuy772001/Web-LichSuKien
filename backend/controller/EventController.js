@@ -40,7 +40,7 @@ const CreateEvent = async (req, res) => {
         if (!token) {
             return res.status(401).json({ success: false, message: 'Không có token.' });
         }
-        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        const decoded = jwt.verify(token, 'secret77');
         if (!decoded) {
             return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
         }
@@ -91,7 +91,7 @@ const GetEvent = async (req, res) => {
         if (!token) {
             return res.status(401).json({ success: false, message: 'Không có token.' });
         }
-        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        const decoded = jwt.verify(token, 'secret77');
         if (!decoded) {
             return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
         }
@@ -115,7 +115,7 @@ const GetEventByID = async (req, res) => {
         if (!token) {
             return res.status(401).json({ success: false, message: 'Không có token.' });
         }
-        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        const decoded = jwt.verify(token, 'secret77');
         if (!decoded) {
             return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
         }
@@ -141,7 +141,7 @@ const UpdateEvent = async (req, res) => {
         if (!token) {
             return res.status(401).json({ success: false, message: 'Không có token.' });
         }
-        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        const decoded = jwt.verify(token, 'secret77');
         if (!decoded) {
             return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
         }
@@ -166,7 +166,7 @@ const DeleteEvent = async (req, res) => {
         if (!token) {
             return res.status(401).json({ success: false, message: 'Không có token.' });
         }
-        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        const decoded = jwt.verify(token, 'secret77');
         if (!decoded) {
             return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
         }
