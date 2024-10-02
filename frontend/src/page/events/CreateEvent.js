@@ -189,7 +189,7 @@ export default function CreateEvent() {
                         </div>
 
                         <div className='row mb-3'>
-                            <label className='col-sm-4 col-form-label'>Link bản đồ<label style={{ color: 'red' }}>*</label></label>
+                            <label className='col-sm-4 col-form-label'>Link bản đồ{/*<label style={{ color: 'red' }}>*</label>*/}</label>
                             <div className='col-sm-8'>
                                 <input className='form-control' name='dia_diem.link_ban_do' onChange={handleChange} value={value.dia_diem.link_ban_do} />
                             </div>

@@ -31,7 +31,7 @@ const CreateEvent = async (req, res) => {
         const website = don_vi_to_chuc?.thong_tin_lien_he?.website;
 
         // Kiểm tra điều kiện cần thiết cho các trường bắt buộc
-        if (!ten_su_kien || !ngay_dien_ra_su_kien || !dia_chi || !link_ban_do || !loai_gia_ve || (loai_gia_ve === 'Số tiền' && !so_tien) || !hinh_anh || !clip_gioi_thieu || !linh_vuc || !nguon) {
+        if (!ten_su_kien || !ngay_dien_ra_su_kien || !dia_chi || !loai_gia_ve || (loai_gia_ve === 'Số tiền' && !so_tien) || !hinh_anh || !clip_gioi_thieu || !linh_vuc || !nguon) {
             return res.status(400).json({ success: false, message: 'Thiếu thông tin cần thiết.' });
         }
 
@@ -86,15 +86,15 @@ export default CreateEvent;
 //read events
 const GetEvent = async (req, res) => {
     try {
-        // Kiểm tra và xác thực token
-        const token = req.headers['authorization'].split(' ')[1];
-        if (!token) {
-            return res.status(401).json({ success: false, message: 'Không có token.' });
-        }
-        const decoded = jwt.verify(token, 'secret77');
-        if (!decoded) {
-            return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
-        }
+        //Kiểm tra và xác thực token
+        // const token = req.headers['authorization'].split(' ')[1];
+        // if (!token) {
+        //     return res.status(401).json({ success: false, message: 'Không có token.' });
+        // }
+        // const decoded = jwt.verify(token, 'secret77');
+        // if (!decoded) {
+        //     return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
+        // }
 
         const events = await EventsModels.find()
         if (!events) {
