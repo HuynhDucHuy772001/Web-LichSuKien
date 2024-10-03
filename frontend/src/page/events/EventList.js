@@ -20,7 +20,7 @@ export default function EventList() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const fetchEvent = await axios.get('https://apisukien.1022.vn/api/get/', {
+            const fetchEvent = await axios.get('https://web-lichsukien.onrender.com/api/get/', {
                 headers: getAuthHeader()
             });
             const response = fetchEvent.data;
@@ -50,12 +50,12 @@ export default function EventList() {
             });
             setFilteredData(filtered);
         }
-    }, [searchTerm, data.events]);
+    }, [searchTerm, removeDiacritics, data.events]);
 
     const handleDelete = async (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa sự kiện này?')) {
             try {
-                const response = await axios.delete(`https://apisukien.1022.vn/api/delete/${id}`, {
+                const response = await axios.delete(`https://web-lichsukien.onrender.com/api/delete/${id}`, {
                     headers: getAuthHeader()
                 });
                 if (response.data.success) {

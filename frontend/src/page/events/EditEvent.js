@@ -49,7 +49,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
         if (!eventId) return;
         async function fetchEvent() {
             try {
-                const response = await axios.get(`https://apisukien.1022.vn/api/get/${eventId}`);
+                const response = await axios.get(`https://web-lichsukien.onrender.com/api/get/${eventId}`);
                 const event = response.data.event;
                 console.log(event);
 
@@ -161,7 +161,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
         };
 
         try {
-            const response = await axios.put(`https://apisukien.1022.vn/api/update/${eventId}`, updatedValue);
+            const response = await axios.put(`https://web-lichsukien.onrender.com/api/update/${eventId}`, updatedValue);
             if (response.data.success) {
                 alert(response.data.message);
                 navigate('/');

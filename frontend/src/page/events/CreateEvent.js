@@ -105,7 +105,7 @@ export default function CreateEvent() {
         };
 
         try {
-            const createevent = await axios.post('https://apisukien.1022.vn/api/create/', updatedValue);
+            const createevent = await axios.post('https://web-lichsukien.onrender.com/api/create/', updatedValue);
             const response = createevent.data;
             if (response.success) {
                 alert(response.message);
