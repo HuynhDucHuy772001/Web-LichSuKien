@@ -19,7 +19,7 @@ export default function Register() {
         }
 
         try {
-            const response = await axios.post('http://localhost:4000/api/auth/signup', { username, password });
+            const response = await axios.post('https://web-lichsukien.onrender.com/api/auth/signup', { username, password });
             if (response.data.status === 'Success') {
                 alert(response.data.message);
                 navigate('/login');

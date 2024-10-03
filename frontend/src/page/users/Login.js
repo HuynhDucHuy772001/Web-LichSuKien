@@ -20,7 +20,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:4000/api/auth/login', { username, password });
+            const response = await axios.post('https://web-lichsukien.onrender.com/api/auth/login', { username, password });
             if (response.data.status === 'Success') {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('user', JSON.stringify(response.data.user));

@@ -106,7 +106,7 @@ export default function CreateEvent() {
         };
 
         try {
-            const createevent = await axios.post('http://localhost:4000/api/create/', updatedValue, { headers: getAuthHeader() });
+            const createevent = await axios.post('https://web-lichsukien.onrender.com/api/create/', updatedValue, { headers: getAuthHeader() });
             const response = createevent.data;
             if (response.success) {
                 alert(response.message);
