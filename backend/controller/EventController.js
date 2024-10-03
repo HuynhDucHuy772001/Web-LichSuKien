@@ -86,15 +86,17 @@ export default CreateEvent;
 //read events
 const GetEvent = async (req, res) => {
     try {
-        //Kiểm tra và xác thực token
-        // const token = req.headers['authorization'].split(' ')[1];
-        // if (!token) {
-        //     return res.status(401).json({ success: false, message: 'Không có token.' });
-        // }
-        // const decoded = jwt.verify(token, 'secret77');
-        // if (!decoded) {
-        //     return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
-        // }
+        // Kiểm tra và xác thực token
+        if (req.user.role !== 'thirdParty') {
+            const token = req.headers['authorization'].split(' ')[1];
+            if (!token) {
+                return res.status(401).json({ success: false, message: 'Không có token.' });
+            }
+            const decoded = jwt.verify(token, 'secret77');
+            if (!decoded) {
+                return res.status(401).json({ success: false, message: 'Token không hợp lệ.' });
+            }
+        }
 
         const events = await EventsModels.find()
         if (!events) {

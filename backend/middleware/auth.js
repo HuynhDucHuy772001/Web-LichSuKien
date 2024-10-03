@@ -8,6 +8,11 @@ const authMiddleware = async (req, res, next) => {
         return res.status(401).json({ message: 'Không có token, quyền truy cập bị từ chối' });
     }
 
+    if (token === process.env.HARD_TOKEN) {
+        req.user = { role: 'thirdParty' };
+        return next();
+    }
+
     try {
         const decoded = jwt.verify(token, 'secret77');
         const user = await UsersModels.findOne({ _id: decoded._id, token: token });
