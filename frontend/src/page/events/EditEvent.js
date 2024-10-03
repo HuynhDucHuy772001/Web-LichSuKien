@@ -224,6 +224,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                                             <option value=''>Chọn loại sự kiện</option>
                                             <option value='Lễ hội truyền thống'>Lễ hội truyền thống</option>
                                             <option value='Thể thao'>Thể thao</option>
+                                            <option value='Vui chơi - Giải trí'>Vui chơi - Giải trí</option>
                                             <option value='Văn hóa - Nghệ thuật'>Văn hóa - Nghệ thuật</option>
                                             <option value='Chính trị - Ngoại giao'>Chính trị - Ngoại giao</option>
                                             <option value='Hội thảo chuyên ngành'>Hội thảo chuyên ngành</option>
@@ -233,7 +234,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                                 </div>
 
                                 <div className='row mb-3'>
-                                    <label className='col-sm-4 col-form-label'>Ngày diễn ra sự kiện<label style={{ color: 'red' }}>*</label></label>
+                                    <label className='col-sm-4 col-form-label'>Ngày bắt đầu diễn ra sự kiện<label style={{ color: 'red' }}>*</label></label>
                                     <div className='col-sm-8'>
                                         <DatePicker
                                             selected={selectedDate}
@@ -246,9 +247,9 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                                 </div>
 
                                 <div className='row mb-3'>
-                                    <label className='col-sm-4 col-form-label'>Thời gian:</label>
-                                    <div className='col-sm-3'>
-                                        <input className='form-control' name='thoi_gian_dien_ra_su_kien' placeholder="HH:mm - HH:mm" onChange={handleChange} value={value.thoi_gian_dien_ra_su_kien} />
+                                    <label className='col-sm-4 col-form-label'>Thời gian diễn ra sự kiện</label>
+                                    <div className='col-sm-8'>
+                                        <input className='form-control' name='thoi_gian_dien_ra_su_kien' placeholder="" onChange={handleChange} value={value.thoi_gian_dien_ra_su_kien} />
                                     </div>
                                 </div>
 

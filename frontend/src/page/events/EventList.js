@@ -47,7 +47,7 @@ export default function EventList() {
             const filtered = data.events.filter(event => {
                 const eventTitleWithoutDiacritics = removeDiacritics(event.ten_su_kien.toLowerCase());
                 return eventTitleWithoutDiacritics.includes(keywordWithoutDiacritics);
-            });
+            }).sort((b, a) => new Date(a.ngay_dien_ra_su_kien) - new Date(b.ngay_dien_ra_su_kien));
             setFilteredData(filtered);
         }
     }, [searchTerm, removeDiacritics, data.events]);
@@ -79,7 +79,7 @@ export default function EventList() {
     function handleCloseModal() {
         setShowModal(false);
         setSelectedEventId(null);
-        fetchData();
+        // fetchData();
     }
 
     const handleExport = () => {
