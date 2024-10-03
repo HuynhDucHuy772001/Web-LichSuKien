@@ -4,6 +4,7 @@ import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns';
+import { getAuthHeader } from '../../utils/auth';
 
 export default function CreateEvent() {
     const [value, setValue] = useState({
@@ -105,7 +106,7 @@ export default function CreateEvent() {
         };
 
         try {
-            const createevent = await axios.post('https://web-lichsukien.onrender.com/api/create/', updatedValue);
+            const createevent = await axios.post('http://localhost:4000/api/create/', updatedValue, { headers: getAuthHeader() });
             const response = createevent.data;
             if (response.success) {
                 alert(response.message);

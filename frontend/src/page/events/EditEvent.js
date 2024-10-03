@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format, parse, isValid } from 'date-fns';
 import './style.css'
+import { getAuthHeader } from '../../utils/auth';
 
 export default function EditEvent({ showModal, handleClose, eventId }) {
     const [value, setValue] = useState({
@@ -49,7 +50,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
         if (!eventId) return;
         async function fetchEvent() {
             try {
-                const response = await axios.get(`https://web-lichsukien.onrender.com/api/get/${eventId}`);
+                const response = await axios.get(`http://localhost:4000/api/get/${eventId}`, { headers: getAuthHeader() });
                 const event = response.data.event;
                 console.log(event);
 
@@ -161,7 +162,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
         };
 
         try {
-            const response = await axios.put(`https://web-lichsukien.onrender.com/api/update/${eventId}`, updatedValue);
+            const response = await axios.put(`http://localhost:4000/api/update/${eventId}`, updatedValue, { headers: getAuthHeader() });
             if (response.data.success) {
                 alert(response.data.message);
                 navigate('/');
