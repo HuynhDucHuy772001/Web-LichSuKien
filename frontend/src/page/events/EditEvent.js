@@ -256,7 +256,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                                 <div className='row mb-3'>
                                     <label className='col-sm-4 col-form-label'>Địa điểm tổ chức sự kiện<label style={{ color: 'red' }}>*</label></label>
                                     <div className='col-sm-8'>
-                                        <input className='form-control' name='dia_diem.dia_chi' onChange={handleChange} value={value.dia_diem.dia_chi} />
+                                        <textarea className='form-control' name='dia_diem.dia_chi' onChange={handleChange} value={value.dia_diem.dia_chi} />
                                     </div>
                                 </div>
 
@@ -295,7 +295,7 @@ export default function EditEvent({ showModal, handleClose, eventId }) {
                                 <div className='row mb-3'>
                                     <label className='col-sm-4 col-form-label'>Tên đơn vị tổ chức</label>
                                     <div className='col-sm-8'>
-                                        <input className='form-control' name='don_vi_to_chuc.ten' onChange={handleChange} value={value.don_vi_to_chuc.ten} />
+                                        <textarea className='form-control' name='don_vi_to_chuc.ten' onChange={handleChange} value={value.don_vi_to_chuc.ten} />
                                     </div>
                                 </div>
 
